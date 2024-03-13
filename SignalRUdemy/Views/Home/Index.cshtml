@@ -1,8 +1,41 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@section Scripts
+{
+    <script src="~/js/signalr_client.js"></script>
+}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="row">
+        <div id="connectionId" class="alert alert-primary" role="alert"></div>
+
+        <div class="col-md-8 offset-md-2">
+            <label id="messageLabel">Test</label>
+            <button type="button" class="btn btn-success disabled mx-1 my-1">
+                Connected Client Count <span id="span-connected-client-count" class="badge text-bg-secondary"></span>
+            </button>
+            <button class="btn btn-primary" id="btn-send-message-all-client">Tüm Clientlara gönder</button>
+            <button class="btn btn-primary" id="btn-send-message-caller-client">İstek Yapan Client Gönder</button>
+            <button class="btn btn-primary" id="btn-send-message-other-client">Diğer Client Gönder</button>
+            <button class="btn btn-primary" id="btn-send-typed-message-other-client">Tüm Clientlara İstek Gönder(complex Type)</button>
+
+            <div>
+                <hr />
+                <input type="text" class="form-control" id="text-connectionId" placeholder="connection Id" />
+                <br />
+                <button class="btn btn-primary" id="btn-send-message-individual-client">Spefesik Client Gönder</button>
+            </div>
+            <div id="groupList" class="alert alert-danger" role="alert">
+                <br /><br />
+                <div>
+                    <hr />
+                    <button class="btn btn-primary" id="btn-groupA-add">A grubuna Katıl</button>
+                    <button class="btn btn-primary" id="btn-groupA-remove">A grubundan Çık</button>
+                    <button class="btn btn-primary" id="btn-groupB-add">B grubuna Katıl</button>
+                    <button class="btn btn-primary" id="btn-groupB-remove">B grubundan Çık</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

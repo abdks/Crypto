@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34227.203
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRUdemy", "SignalRUdemy\SignalRUdemy.csproj", "{13EA4E25-DC87-49BD-B07C-23304EEA86A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{D6F799D0-03B6-432E-A7AE-974EEA6677E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{13EA4E25-DC87-49BD-B07C-23304EEA86A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13EA4E25-DC87-49BD-B07C-23304EEA86A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13EA4E25-DC87-49BD-B07C-23304EEA86A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6F799D0-03B6-432E-A7AE-974EEA6677E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6F799D0-03B6-432E-A7AE-974EEA6677E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6F799D0-03B6-432E-A7AE-974EEA6677E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6F799D0-03B6-432E-A7AE-974EEA6677E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
