@@ -42,7 +42,7 @@ class Program
             .WithIdentity("trigger1", "group1")
             .StartNow()
             .WithSimpleSchedule(x => x
-                .WithIntervalInSeconds(30)
+                .WithIntervalInSeconds(1)
                 .RepeatForever())
             .Build();
 
