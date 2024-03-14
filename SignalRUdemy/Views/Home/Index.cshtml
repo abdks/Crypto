@@ -11,8 +11,8 @@
         <div id="connectionId" class="alert alert-primary" role="alert"></div>
 
         <div class="col-md-8 offset-md-2">
-            <label id="messageLabel">Test</label>
-            <button type="button" class="btn btn-success disabled mx-1 my-1">
+@*             <label id="messageLabel">Test</label>
+ *@            <button type="button" class="btn btn-success disabled mx-1 my-1">
                 Connected Client Count <span id="span-connected-client-count" class="badge text-bg-secondary"></span>
             </button>
             <button class="btn btn-primary" id="btn-send-message-all-client">Tüm Clientlara gönder</button>
@@ -36,6 +36,53 @@
                     <button class="btn btn-primary" id="btn-groupB-remove">B grubundan Çık</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Tablo -->
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+            @* <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Para Birimi</th>
+                        <th scope="col">Kripto Para</th>
+                        <th scope="col">Fiyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TRY</td>
+                        <td>Bitcoin</td>
+                        <td id="messageLabel">$40,000</td>
+                    </tr>
+                    <tr>
+                        <td>TRY</td>
+                        <td>SOL</td>
+                        <td id="messageLabel2">€3,000</td>
+                    </tr>
+                    <tr>
+                        <td>TRY</td>
+                        <td>Ethereum</td>
+                        <td id="messageLabel3">€3,000</td>
+                    </tr>
+                    <!-- İhtiyacınıza göre daha fazla satır ekleyebilirsiniz -->
+                </tbody>
+            </table> *@
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Para Birimi</th>
+                        <th scope="col">Kripto Para</th>
+                        <th scope="col">Fiyat</th>
+                        <th scope="col">Günlük Değişim</th>
+                    </tr>
+                </thead>
+                <tbody id="cryptoTableBody">
+                    <!-- Kripto para birimleri burada dinamik olarak oluşturulacak -->
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>

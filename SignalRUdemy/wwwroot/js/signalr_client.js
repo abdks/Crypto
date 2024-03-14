@@ -30,13 +30,39 @@
         setTimeout(() => start(), 5000);
     }
 
+
+
+    //connection.on(receiveMessageForAllClientClientMethodCall, (mesaj) => {
+    //    console.log("Gelen Mesaj", mesaj);
+    //    const [price, baseCurrency, cryptoCurrency] = mesaj.split(" ");
+    //    const targetRow = $(`#cryptoTableBody tr[data-crypto="${cryptoCurrency}"]`);
+    //    if (targetRow.length > 0) {
+    //        targetRow.find(".price").text(price);
+    //    } else {
+    //        const row = `<tr data-crypto="${cryptoCurrency}">
+    //                        <td>${baseCurrency}</td>
+    //                        <td>${cryptoCurrency}</td>
+    //                        <td class="price">${price}</td>
+    //                    </tr>`;
+    //        $("#cryptoTableBody").append(row);
+    //    }
+    //});
     connection.on(receiveMessageForAllClientClientMethodCall, (mesaj) => {
         console.log("Gelen Mesaj", mesaj);
-        $("#messageLabel").text(`Mesaj: ${mesaj}`);
-    });
-
-    connection.on(receiveTypedMessageForAllClient, (urun) => {
-        console.log("Gelen Ürün", urun);
+        const [price, baseCurrency, cryptoCurrency, dailyPercent] = mesaj.split(" ");
+        const targetRow = $(`#cryptoTableBody tr[data-crypto="${cryptoCurrency}"]`);
+        if (targetRow.length > 0) {
+            targetRow.find(".price").text(price);
+            targetRow.find(".daily-percent").text(dailyPercent);
+        } else {
+            const row = `<tr data-crypto="${cryptoCurrency}">
+                        <td>${baseCurrency}</td>
+                        <td>${cryptoCurrency}</td>
+                        <td class="price">${price}</td>
+                        <td class="daily-percent">${dailyPercent}</td>
+                    </tr>`;
+            $("#cryptoTableBody").append(row);
+        }
     });
 
     connection.on(receiveMessageForOtherClient, (mesaj) => {
