@@ -26,7 +26,22 @@ namespace TestConsoleApp
             await scheduler.Start();
 
             string[] baseCurrencies = { "TRY", "EUR" };
-            string[] cryptoCurrencies = { "BTC", "SOL", "ETH" };
+            string[] cryptoCurrencies = { "BTC", "SOL", "ETH", "ADA" , "AXS", "STX", "APT", "HOT", "AMP", "BAT" };
+
+            // Kripto paraların resimlerini eşleştirme
+            Dictionary<string, string> cryptoImages = new Dictionary<string, string>
+            {
+                { "BTC", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" },
+                { "SOL", "https://static.vecteezy.com/system/resources/previews/024/093/312/original/solana-sol-glass-crypto-coin-3d-illustration-free-png.png" },
+                { "ETH", "https://cloudfront-us-east-1.images.arcpublishing.com/coindesk/ZJZZK5B2ZNF25LYQHMUTBTOMLU.png" },
+                { "ADA" , "https://cdn4.iconfinder.com/data/icons/crypto-currency-and-coin-2/256/cardano_ada-512.png"},
+                { "AXS" , "https://seeklogo.com/images/A/axie-infinity-axs-logo-57FE26A5DC-seeklogo.com.png" },
+                { "STX", "https://cryptologos.cc/logos/stacks-stx-logo.png" },
+                { "APT", "https://cryptologos.cc/logos/aptos-apt-logo.png" },
+                { "HOT" , "https://s2.coinmarketcap.com/static/img/coins/200x200/2682.png" },
+                { "AMP" , "https://cryptologos.cc/logos/amp-amp-logo.png"},
+                { "BAT", "https://w7.pngwing.com/pngs/628/626/png-transparent-attention-basic-basicattentiontoken-blockchain-token-blockchain-classic-icon.png" }
+            };
 
             // Her bir kripto para birimi ve para cinsi için bir iş oluştur
             foreach (var baseCurrency in baseCurrencies)
@@ -37,6 +52,7 @@ namespace TestConsoleApp
                     jobData.Add("Connection", connection);
                     jobData.Add("BaseCurrency", baseCurrency);
                     jobData.Add("CryptoCurrency", cryptoCurrency);
+                    jobData.Add("CryptoImages", cryptoImages);
 
                     IJobDetail job = JobBuilder.Create<ApiCallJob>()
                         .UsingJobData(jobData)
@@ -68,6 +84,7 @@ namespace TestConsoleApp
             string baseCurrency = context.JobDetail.JobDataMap.GetString("BaseCurrency");
             string cryptoCurrency = context.JobDetail.JobDataMap.GetString("CryptoCurrency");
             var connection = (HubConnection)context.JobDetail.JobDataMap["Connection"];
+            var cryptoImages = (Dictionary<string, string>)context.JobDetail.JobDataMap["CryptoImages"];
 
             // API çağrısı işlemi burada gerçekleştirilecek
             var (price, dailyPercent, timestamp) = await PerformApiCall(baseCurrency, cryptoCurrency);
@@ -79,10 +96,10 @@ namespace TestConsoleApp
             Console.WriteLine($"Zaman: {timestamp:dd/MM/yyyy HH:mm}");
 
             // Mesajı SignalR üzerinden gönderin
-            await connection.InvokeAsync("BroadcastMessageToAllClient", $"{price} {baseCurrency} {cryptoCurrency} {dailyPercent}");
+            await connection.InvokeAsync("BroadcastMessageToAllClient", $"{price} {baseCurrency} {cryptoCurrency} {dailyPercent} {cryptoImages[cryptoCurrency]}");
 
             // Veritabanına kayıt ekleme
-            AddDataToDatabase(baseCurrency, cryptoCurrency, price, timestamp,dailyPercent);
+            AddDataToDatabase(baseCurrency, cryptoCurrency, price, timestamp, dailyPercent);
         }
 
         private async Task<(double, double, DateTime)> PerformApiCall(string baseCurrency, string cryptoCurrency)
@@ -104,7 +121,7 @@ namespace TestConsoleApp
             }
         }
 
-        private void AddDataToDatabase(string baseCurrency, string cryptoCurrency, double price, DateTime timestamp,double dailyPercent)
+        private void AddDataToDatabase(string baseCurrency, string cryptoCurrency, double price, DateTime timestamp, double dailyPercent)
         {
             using (var context = new AppDbContext())
             {

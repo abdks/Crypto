@@ -6,83 +6,33 @@
     <script src="~/js/signalr_client.js"></script>
 }
 
-<div class="container">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="container mt-4">
     <div class="row">
-        <div id="connectionId" class="alert alert-primary" role="alert"></div>
-
         <div class="col-md-8 offset-md-2">
-@*             <label id="messageLabel">Test</label>
- *@            <button type="button" class="btn btn-success disabled mx-1 my-1">
-                Connected Client Count <span id="span-connected-client-count" class="badge text-bg-secondary"></span>
-            </button>
-            <button class="btn btn-primary" id="btn-send-message-all-client">Tüm Clientlara gönder</button>
-            <button class="btn btn-primary" id="btn-send-message-caller-client">İstek Yapan Client Gönder</button>
-            <button class="btn btn-primary" id="btn-send-message-other-client">Diğer Client Gönder</button>
-            <button class="btn btn-primary" id="btn-send-typed-message-other-client">Tüm Clientlara İstek Gönder(complex Type)</button>
-
-            <div>
-                <hr />
-                <input type="text" class="form-control" id="text-connectionId" placeholder="connection Id" />
-                <br />
-                <button class="btn btn-primary" id="btn-send-message-individual-client">Spefesik Client Gönder</button>
-            </div>
-            <div id="groupList" class="alert alert-danger" role="alert">
-                <br /><br />
-                <div>
-                    <hr />
-                    <button class="btn btn-primary" id="btn-groupA-add">A grubuna Katıl</button>
-                    <button class="btn btn-primary" id="btn-groupA-remove">A grubundan Çık</button>
-                    <button class="btn btn-primary" id="btn-groupB-add">B grubuna Katıl</button>
-                    <button class="btn btn-primary" id="btn-groupB-remove">B grubundan Çık</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tablo -->
-    <div class="row mt-4">
-        <div class="col-md-8 offset-md-2">
-            @* <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Para Birimi</th>
-                        <th scope="col">Kripto Para</th>
-                        <th scope="col">Fiyat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>TRY</td>
-                        <td>Bitcoin</td>
-                        <td id="messageLabel">$40,000</td>
-                    </tr>
-                    <tr>
-                        <td>TRY</td>
-                        <td>SOL</td>
-                        <td id="messageLabel2">€3,000</td>
-                    </tr>
-                    <tr>
-                        <td>TRY</td>
-                        <td>Ethereum</td>
-                        <td id="messageLabel3">€3,000</td>
-                    </tr>
-                    <!-- İhtiyacınıza göre daha fazla satır ekleyebilirsiniz -->
-                </tbody>
-            </table> *@
-            <table class="table">
-                <thead>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">Para Birimi</th>
                         <th scope="col">Kripto Para</th>
                         <th scope="col">Fiyat</th>
                         <th scope="col">Günlük Değişim</th>
+                        <th scope="col">Resim</th>
                     </tr>
                 </thead>
-                <tbody id="cryptoTableBody">
-                    <!-- Kripto para birimleri burada dinamik olarak oluşturulacak -->
-                </tbody>
+                <tbody id="cryptoTableBody"></tbody>
             </table>
-
         </div>
     </div>
 </div>
+
+<style>
+    /* Resim boyutu */
+    .crypto-image {
+        max-width: 50px;
+        max-height: 50px;
+        width: auto;
+        height: auto;
+    }
+</style>
