@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34227.203
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRUdemy", "SignalRUdemy\SignalRUdemy.csproj", "{13EA4E25-DC87-49BD-B07C-23304EEA86A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "SignalRUdemy\UI.csproj", "{13EA4E25-DC87-49BD-B07C-23304EEA86A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{D6F799D0-03B6-432E-A7AE-974EEA6677E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "test", "test\test.csproj", "{D6F799D0-03B6-432E-A7AE-974EEA6677E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

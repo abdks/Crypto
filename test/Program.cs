@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR.Client;
+﻿using Microsoft.AspNetCore.SignalR.Client;
 using Quartz;
 using Quartz.Impl;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using test;
 
 namespace TestConsoleApp
@@ -28,7 +22,6 @@ namespace TestConsoleApp
             string[] baseCurrencies = { "TRY", "EUR" };
             string[] cryptoCurrencies = { "BTC", "SOL", "ETH", "ADA" , "AXS", "STX", "APT", "HOT", "AMP", "BAT" };
 
-            // Kripto paraların resimlerini eşleştirme
             Dictionary<string, string> cryptoImages = new Dictionary<string, string>
             {
                 { "BTC", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" },
@@ -43,7 +36,6 @@ namespace TestConsoleApp
                 { "BAT", "https://w7.pngwing.com/pngs/628/626/png-transparent-attention-basic-basicattentiontoken-blockchain-token-blockchain-classic-icon.png" }
             };
 
-            // Her bir kripto para birimi ve para cinsi için bir iş oluştur
             foreach (var baseCurrency in baseCurrencies)
             {
                 foreach (var cryptoCurrency in cryptoCurrencies)
@@ -86,7 +78,6 @@ namespace TestConsoleApp
             var connection = (HubConnection)context.JobDetail.JobDataMap["Connection"];
             var cryptoImages = (Dictionary<string, string>)context.JobDetail.JobDataMap["CryptoImages"];
 
-            // API çağrısı işlemi burada gerçekleştirilecek
             var (price, dailyPercent, timestamp) = await PerformApiCall(baseCurrency, cryptoCurrency);
 
             Console.WriteLine($"Para Birimi: {baseCurrency}");
@@ -95,10 +86,8 @@ namespace TestConsoleApp
             Console.WriteLine($"Günlük Değişim: {dailyPercent}");
             Console.WriteLine($"Zaman: {timestamp:dd/MM/yyyy HH:mm}");
 
-            // Mesajı SignalR üzerinden gönderin
             await connection.InvokeAsync("BroadcastMessageToAllClient", $"{price} {baseCurrency} {cryptoCurrency} {dailyPercent} {cryptoImages[cryptoCurrency]}");
 
-            // Veritabanına kayıt ekleme
             AddDataToDatabase(baseCurrency, cryptoCurrency, price, timestamp, dailyPercent);
         }
 
@@ -112,10 +101,9 @@ namespace TestConsoleApp
                 var body = await response.Content.ReadAsStringAsync();
                 var resultObject = Newtonsoft.Json.JsonConvert.DeserializeObject<ApiResult>(body);
 
-                // API'den gelen veriyi kullanarak fiyat, günlük değişim ve tarih bilgilerini al
-                var price = resultObject.data[0].last; // LAST değerini kullan
-                var dailyPercent = resultObject.data[0].dailyPercent; // Günlük değişim değerini kullan
-                var timestamp = DateTime.Now; // API'den doğrudan tarih bilgisi gelmiyorsa, şu anki zamanı kullanabilirsiniz.
+                var price = resultObject.data[0].last; 
+                var dailyPercent = resultObject.data[0].dailyPercent; 
+                var timestamp = DateTime.Now; 
 
                 return (price, dailyPercent, timestamp);
             }
