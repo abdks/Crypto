@@ -70,18 +70,19 @@ namespace TestConsoleApp
             var connection = (HubConnection)context.JobDetail.JobDataMap["Connection"];
 
             // API çağrısı işlemi burada gerçekleştirilecek
-            var (price, timestamp) = await PerformApiCall(baseCurrency, cryptoCurrency);
+            var (price, dailyPercent, timestamp) = await PerformApiCall(baseCurrency, cryptoCurrency);
 
             Console.WriteLine($"Para Birimi: {baseCurrency}");
             Console.WriteLine($"Kripto Para: {cryptoCurrency}");
             Console.WriteLine($"Fiyat: {price}");
+            Console.WriteLine($"Günlük Değişim: {dailyPercent}");
             Console.WriteLine($"Zaman: {timestamp:dd/MM/yyyy HH:mm}");
 
             // Mesajı SignalR üzerinden gönderin
-            await connection.InvokeAsync("BroadcastMessageToAllClient", $"{price} {baseCurrency} {cryptoCurrency}");
+            await connection.InvokeAsync("BroadcastMessageToAllClient", $"{price} {baseCurrency} {cryptoCurrency} {dailyPercent}");
 
             // Veritabanına kayıt ekleme
-            AddDataToDatabase(baseCurrency, cryptoCurrency, price, timestamp);
+            AddDataToDatabase(baseCurrency, cryptoCurrency, price, timestamp,dailyPercent);
         }
 
         private async Task<(double, double, DateTime)> PerformApiCall(string baseCurrency, string cryptoCurrency)
@@ -103,8 +104,7 @@ namespace TestConsoleApp
             }
         }
 
-
-        private void AddDataToDatabase(string baseCurrency, string cryptoCurrency, double price, DateTime timestamp)
+        private void AddDataToDatabase(string baseCurrency, string cryptoCurrency, double price, DateTime timestamp,double dailyPercent)
         {
             using (var context = new AppDbContext())
             {
@@ -113,7 +113,8 @@ namespace TestConsoleApp
                     KriptoPara = cryptoCurrency,
                     ParaCinsi = baseCurrency,
                     Deger = (decimal)price,
-                    Tarih = timestamp
+                    Tarih = timestamp,
+                    Gunluk = (decimal)dailyPercent
                 };
 
                 context.CryptoCurrencies.Add(cryptoCurrencyData);

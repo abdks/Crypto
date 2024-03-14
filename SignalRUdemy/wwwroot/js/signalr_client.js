@@ -32,38 +32,53 @@
 
 
 
+  
     //connection.on(receiveMessageForAllClientClientMethodCall, (mesaj) => {
     //    console.log("Gelen Mesaj", mesaj);
-    //    const [price, baseCurrency, cryptoCurrency] = mesaj.split(" ");
+    //    const [price, baseCurrency, cryptoCurrency, dailyPercent] = mesaj.split(" ");
     //    const targetRow = $(`#cryptoTableBody tr[data-crypto="${cryptoCurrency}"]`);
     //    if (targetRow.length > 0) {
     //        targetRow.find(".price").text(price);
+    //        targetRow.find(".daily-percent").text(dailyPercent);
     //    } else {
     //        const row = `<tr data-crypto="${cryptoCurrency}">
-    //                        <td>${baseCurrency}</td>
-    //                        <td>${cryptoCurrency}</td>
-    //                        <td class="price">${price}</td>
-    //                    </tr>`;
+    //                    <td>${baseCurrency}</td>
+    //                    <td>${cryptoCurrency}</td>
+    //                    <td class="price">${price}</td>
+    //                    <td class="daily-percent">${dailyPercent}</td>
+    //                </tr>`;
     //        $("#cryptoTableBody").append(row);
     //    }
     //});
+
     connection.on(receiveMessageForAllClientClientMethodCall, (mesaj) => {
-        console.log("Gelen Mesaj", mesaj);
-        const [price, baseCurrency, cryptoCurrency, dailyPercent] = mesaj.split(" ");
-        const targetRow = $(`#cryptoTableBody tr[data-crypto="${cryptoCurrency}"]`);
-        if (targetRow.length > 0) {
-            targetRow.find(".price").text(price);
-            targetRow.find(".daily-percent").text(dailyPercent);
-        } else {
-            const row = `<tr data-crypto="${cryptoCurrency}">
-                        <td>${baseCurrency}</td>
-                        <td>${cryptoCurrency}</td>
-                        <td class="price">${price}</td>
-                        <td class="daily-percent">${dailyPercent}</td>
-                    </tr>`;
-            $("#cryptoTableBody").append(row);
-        }
-    });
+    console.log("Gelen Mesaj", mesaj);
+    const [price, baseCurrency, cryptoCurrency, dailyPercent] = mesaj.split(" ");
+    const targetRow = $(`#cryptoTableBody tr[data-crypto="${cryptoCurrency}"]`);
+    if (targetRow.length > 0) {
+        targetRow.find(".price").text(price);
+        targetRow.find(".daily-percent").text(dailyPercent);
+
+        // Update label with daily percent value
+        $("#dailyPercentLabel").text(`Günlük Değişim: ${dailyPercent}`);
+    } else {
+        const row = `<tr data-crypto="${cryptoCurrency}">
+                    <td>${baseCurrency}</td>
+                    <td>${cryptoCurrency}</td>
+                    <td class="price">${price}</td>
+                    <td class="daily-percent">${dailyPercent}</td>
+                </tr>`;
+        $("#cryptoTableBody").append(row);
+
+        // Update label with daily percent value
+        $("#dailyPercentLabel").text(`Günlük Değişim: ${dailyPercent}`);
+    }
+});
+
+
+
+
+
 
     connection.on(receiveMessageForOtherClient, (mesaj) => {
         console.log("(Diğerleri) Gelen Mesaj", mesaj);
